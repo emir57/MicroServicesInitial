@@ -22,6 +22,7 @@ builder.Services.AddSingleton<DatabaseSettings>(sp =>
 
 #region Services
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 #endregion
 
 
