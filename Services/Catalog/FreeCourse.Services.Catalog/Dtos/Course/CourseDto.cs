@@ -12,6 +12,6 @@ public class CourseDto
     public string Picture { get; set; }
     public DateTime CreatedTime { get; set; }
     public FeatureDto Feature { get; set; }
-    public string CateogoryId { get; set; }
+    public string CategoryId { get; set; }
     public CategoryDto Category { get; set; }
 }

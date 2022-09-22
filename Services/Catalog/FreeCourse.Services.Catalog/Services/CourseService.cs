@@ -7,7 +7,7 @@ using MongoDB.Driver;
 
 namespace FreeCourse.Services.Catalog.Services;
 
-internal class CourseService : ICourseService
+public class CourseService : ICourseService
 {
     private readonly IMongoCollection<Course> _courseCollection;
     private readonly IMongoCollection<Category> _categoryCollection;
@@ -30,7 +30,7 @@ internal class CourseService : ICourseService
         if (courses.Any())
             foreach (Course course in courses)
                 course.Category = await _categoryCollection
-                    .Find(c => c.Id == course.CateogoryId).FirstOrDefaultAsync();
+                    .Find(c => c.Id == course.CategoryId).FirstOrDefaultAsync();
         else
             courses = new List<Course>();
 
@@ -47,7 +47,7 @@ internal class CourseService : ICourseService
             return Response<CourseDto>.Fail("Course not found", 404);
 
         course.Category = await _categoryCollection
-            .Find(c => c.Id == course.CateogoryId).FirstOrDefaultAsync();
+            .Find(c => c.Id == course.CategoryId).FirstOrDefaultAsync();
 
         CourseDto result = _mapper.Map<CourseDto>(course);
 
@@ -61,7 +61,7 @@ internal class CourseService : ICourseService
         if (courses.Any())
             foreach (Course course in courses)
                 course.Category = await _categoryCollection
-                    .Find(c => c.Id == course.CateogoryId).FirstOrDefaultAsync();
+                    .Find(c => c.Id == course.CategoryId).FirstOrDefaultAsync();
         else
             courses = new List<Course>();
 

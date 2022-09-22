@@ -22,7 +22,7 @@ public class Course
 
 
     [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-    public string CateogoryId { get; set; }
+    public string CategoryId { get; set; }
     [BsonIgnore]
     public Category Category { get; set; }
 }

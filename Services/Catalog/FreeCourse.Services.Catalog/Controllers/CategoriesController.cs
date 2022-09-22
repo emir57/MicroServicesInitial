@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace FreeCourse.Services.Catalog.Controllers;
 
 [ApiController]
-[Route("[controller]/api")]
-internal class CategoriesController : CustomBaseController
+[Route("api/[controller]")]
+public class CategoriesController : CustomBaseController
 {
     private readonly ICategoryService _categoryService;
 

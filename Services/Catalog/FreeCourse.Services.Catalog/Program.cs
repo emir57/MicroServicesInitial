@@ -13,11 +13,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 #region DatabaseSettings
-builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseStrings"));
-builder.Services.AddSingleton<DatabaseSettings>(sp =>
-{
-    return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
-});
+//builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseStrings"));
+//builder.Services.AddSingleton<DatabaseSettings>(sp =>
+//{
+//    return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
+//});
+builder.Services.AddSingleton<IDatabaseSettings>(x =>
+    builder.Configuration.GetSection("DatabaseStrings").Get<DatabaseSettings>());
 #endregion
 
 #region Services

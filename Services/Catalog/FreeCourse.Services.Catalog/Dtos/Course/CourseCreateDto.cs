@@ -8,5 +8,5 @@ public class CourseCreateDto
     public string UserId { get; set; }
     public string Picture { get; set; }
     public FeatureDto Feature { get; set; }
-    public string CateogoryId { get; set; }
+    public string CategoryId { get; set; }
 }
