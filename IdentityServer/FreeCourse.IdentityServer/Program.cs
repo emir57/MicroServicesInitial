@@ -59,7 +59,7 @@ namespace FreeCourse.IdentityServer
                         {
                             UserName = "emir57",
                             Email = "emir57@hotmail.com",
-                            City = "Ankara"
+                            City = "Ankara",
                         }, "admin1234").GetAwaiter().GetResult();
                     }
 
