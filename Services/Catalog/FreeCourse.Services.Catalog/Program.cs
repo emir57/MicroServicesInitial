@@ -1,4 +1,5 @@
 using FreeCourse.Services.Catalog.Dtos;
+using FreeCourse.Services.Catalog.Services;
 using FreeCourse.Services.Catalog.Settings;
 using Microsoft.Extensions.Options;
 
@@ -17,6 +18,10 @@ builder.Services.AddSingleton<DatabaseSettings>(sp =>
 {
     return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
 });
+#endregion
+
+#region Services
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 #endregion
 
 
