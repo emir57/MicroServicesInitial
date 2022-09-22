@@ -1,4 +1,6 @@
 using FreeCourse.Services.Catalog.Dtos;
+using FreeCourse.Services.Catalog.Settings;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+#region DatabaseSettings
+builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseStrings"));
+builder.Services.AddSingleton<DatabaseSettings>(sp =>
+{
+    return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
+});
+#endregion
+
 
 
 #region AutoMapper

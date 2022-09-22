@@ -1,4 +1,4 @@
-﻿using FreeCourse.Services.Catalog.Dtos.Category;
+﻿using FreeCourse.Services.Catalog.Dtos;
 
 namespace FreeCourse.Services.Catalog.Dtos;
 
