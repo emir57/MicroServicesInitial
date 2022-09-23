@@ -1,24 +1,47 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FreeCourse.Services.PhotoStock.Dtos;
+using FreeCourse.Shared.ControllerBases;
+using FreeCourse.Shared.Dtos;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FreeCourse.Services.PhotoStock.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PhotosController : ControllerBase
+    public class PhotosController : CustomBaseController
     {
 
         [HttpPost]
         public async Task<IActionResult> PhotoSave(IFormFile photo, CancellationToken cancellationToken)
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/photos", photo.FileName);
+            if (photo != null && photo.Length > 0)
+            {
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/photos", photo.FileName);
 
-            var stream = new FileStream(path, FileMode.Create);
+                var stream = new FileStream(path, FileMode.Create);
 
-            await photo.CopyToAsync(stream, cancellationToken);
+                await photo.CopyToAsync(stream, cancellationToken);
 
-            var returnPath = $"photos/{photo.FileName}";
+                string returnPath = $"photos/{photo.FileName}";
+                PhotoDto photoDto = new(returnPath);
 
-            return Ok(returnPath);
+                return CreateActionResultInstance(Response<PhotoDto>.Success(photoDto, 200));
+            }
+
+            return CreateActionResultInstance(Response<PhotoDto>.Fail("Photo is empty", 400));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PhotoDelete(string photoUrl)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/photos", photoUrl);
+
+            if (System.IO.File.Exists(path) == false)
+            {
+                return CreateActionResultInstance(Response<NoContent>.Fail("Photo is not found", 404));
+            }
+
+            System.IO.File.Delete(path);
+            return CreateActionResultInstance(Response<NoContent>.Success(204));
         }
     }
 }
