@@ -54,13 +54,12 @@ namespace FreeCourse.IdentityServer
                     ClientName="Web Application Name2",
                     AllowOfflineAccess=true,
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    AllowedScopes = { "catalog_fullpermisson", "photo_stock_fullpermisson",IdentityServerConstants.StandardScopes.Email,IdentityServerConstants.StandardScopes.OpenId
-                        ,IdentityServerConstants.StandardScopes.OfflineAccess, IdentityServerConstants.LocalApi.ScopeName,"roles"},
+                    AllowedScopes={ "basket_fullpermission", "order_fullpermission", "gateway_fullpermission", IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess, IdentityServerConstants.LocalApi.ScopeName,"roles" },
                     AccessTokenLifetime = 1 * 60 *60,
                     RefreshTokenExpiration = TokenExpiration.Absolute,
                     AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds,
                     RefreshTokenUsage = TokenUsage.ReUse
-                }
+                },
             };
     }
 }
