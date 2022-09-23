@@ -4,6 +4,7 @@
 
 using IdentityServer4;
 using IdentityServer4.Models;
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 
@@ -21,7 +22,10 @@ namespace FreeCourse.IdentityServer
         public static IEnumerable<IdentityResource> IdentityResources =>
             new IdentityResource[]
             {
-
+                new IdentityResources.Email(),
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile(),
+                new IdentityResource(){Name="roles",DisplayName="Roles",Description="Users Roles",UserClaims=new[]{"role"}}
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
@@ -41,9 +45,21 @@ namespace FreeCourse.IdentityServer
                     ClientId="WebClient",
                     ClientName="Web Application Name",
                     ClientSecrets = {new Secret("secret".Sha256())},
-                    Enabled = true,
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowedScopes = { "catalog_fullpermisson", "photo_stock_fullpermisson", IdentityServerConstants.LocalApi.ScopeName}
+                },
+                new Client
+                {
+                    ClientId="WebClient2",
+                    ClientName="Web Application Name2",
+                    AllowOfflineAccess=true,
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    AllowedScopes = { "catalog_fullpermisson", "photo_stock_fullpermisson",IdentityServerConstants.StandardScopes.Email,IdentityServerConstants.StandardScopes.OpenId
+                        ,IdentityServerConstants.StandardScopes.OfflineAccess, IdentityServerConstants.LocalApi.ScopeName,"roles"},
+                    AccessTokenLifetime = 1 * 60 *60,
+                    RefreshTokenExpiration = TokenExpiration.Absolute,
+                    AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds,
+                    RefreshTokenUsage = TokenUsage.ReUse
                 }
             };
     }

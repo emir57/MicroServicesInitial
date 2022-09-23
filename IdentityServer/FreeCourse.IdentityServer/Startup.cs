@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using FreeCourse.IdentityServer.Services;
 
 namespace FreeCourse.IdentityServer
 {
@@ -28,9 +29,9 @@ namespace FreeCourse.IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-
             services.AddLocalApiAuthentication();
+
+            services.AddControllersWithViews();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -54,6 +55,8 @@ namespace FreeCourse.IdentityServer
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
+
+            builder.AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>();
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
