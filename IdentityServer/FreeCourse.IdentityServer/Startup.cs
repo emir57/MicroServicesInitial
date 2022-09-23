@@ -1,4 +1,8 @@
-﻿using IdentityServer4;
+﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+
+
+using IdentityServer4;
 using FreeCourse.IdentityServer.Data;
 using FreeCourse.IdentityServer.Models;
 using Microsoft.AspNetCore.Builder;
@@ -47,13 +51,13 @@ namespace FreeCourse.IdentityServer
                 options.EmitStaticAudienceClaim = true;
             })
                 .AddInMemoryIdentityResources(Config.IdentityResources)
-               .AddInMemoryApiResources(Config.ApiResources)
+                .AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
 
-            builder.AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>();
 
+            builder.AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>();
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
 

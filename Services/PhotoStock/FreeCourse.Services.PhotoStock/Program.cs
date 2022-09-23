@@ -36,6 +36,7 @@ if (app.Environment.IsDevelopment())
 app.UseStaticFiles();
 #endregion
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
