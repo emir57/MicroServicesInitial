@@ -2,6 +2,7 @@
 using FreeCourse.Services.Catalog.Services;
 using FreeCourse.Shared.ControllerBases;
 using FreeCourse.Shared.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreeCourse.Services.Catalog.Controllers;
