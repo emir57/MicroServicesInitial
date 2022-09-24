@@ -1,3 +1,4 @@
+using FreeCourse.Services.Basket.Services;
 using FreeCourse.Services.Basket.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,15 @@ builder.Services.AddSwaggerGen();
 #region Redis Settings
 builder.Services.AddSingleton(typeof(RedisSettings),
     x => builder.Configuration.GetSection(nameof(RedisSettings)).Get<RedisSettings>());
+#endregion
+
+#region RedisService
+builder.Services.AddSingleton<RedisService>(sp =>
+{
+    RedisService redisService = sp.GetService<RedisService>();
+    redisService.Connect();
+    return redisService;
+});
 #endregion
 
 var app = builder.Build();
