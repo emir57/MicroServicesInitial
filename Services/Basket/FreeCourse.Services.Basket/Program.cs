@@ -1,5 +1,6 @@
 using FreeCourse.Services.Basket.Services;
 using FreeCourse.Services.Basket.Settings;
+using FreeCourse.Shared.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+#region HttpContextAccessor
+builder.Services.AddHttpContextAccessor();
+#endregion
+
+#region SharedIdentityService
+builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+#region
 
 #region Redis Settings
 builder.Services.AddSingleton(typeof(RedisSettings),
