@@ -17,7 +17,7 @@ builder.Services.AddHttpContextAccessor();
 
 #region SharedIdentityService
 builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
-#region
+#endregion
 
 #region Redis Settings
 builder.Services.AddSingleton(typeof(RedisSettings),
