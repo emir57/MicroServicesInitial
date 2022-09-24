@@ -42,14 +42,14 @@ builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 #endregion
 
 #region Redis Settings
-builder.Services.AddSingleton(typeof(RedisSettings),
-    x => builder.Configuration.GetSection(nameof(RedisSettings)).Get<RedisSettings>());
+builder.Services.AddSingleton<RedisSettings>(x =>
+    builder.Configuration.GetSection("RedisSettings").Get<RedisSettings>());
 #endregion
 
 #region RedisService
 builder.Services.AddSingleton<RedisService>(sp =>
 {
-    RedisService redisService = sp.GetService<RedisService>();
+    RedisService redisService = new(sp.GetRequiredService<RedisSettings>());
     redisService.Connect();
     return redisService;
 });

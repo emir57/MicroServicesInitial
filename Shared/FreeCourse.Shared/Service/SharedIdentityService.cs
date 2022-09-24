@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace FreeCourse.Shared.Service
 {
@@ -10,10 +11,11 @@ namespace FreeCourse.Shared.Service
         public SharedIdentityService(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
+            var user = _httpContextAccessor.HttpContext.User.Claims;
         }
 
         public string GetUserId
             => _httpContextAccessor.HttpContext.User
-                .FindFirst(x => x.Type == JwtRegisteredClaimNames.Sub).Value;
+                .FindFirst(ClaimTypes.NameIdentifier).Value;
     }
 }
