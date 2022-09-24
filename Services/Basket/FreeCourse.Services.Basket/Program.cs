@@ -29,6 +29,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 #endregion
 
+#region Services
+builder.Services.AddScoped<IBasketService, BasketService>();
+#endregion
+
 #region HttpContextAccessor
 builder.Services.AddHttpContextAccessor();
 #endregion
