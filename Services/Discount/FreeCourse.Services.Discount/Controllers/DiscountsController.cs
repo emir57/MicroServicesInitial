@@ -43,6 +43,7 @@ public class DiscountsController : CustomBaseController
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] Models.Discount discount)
     {
+        discount.UserId = _sharedIdentityService.GetUserId;
         var response = await _discountService.SaveAsync(discount);
         return CreateActionResultInstance(response);
     }
@@ -50,6 +51,7 @@ public class DiscountsController : CustomBaseController
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] Models.Discount discount)
     {
+        discount.UserId = _sharedIdentityService.GetUserId;
         var response = await _discountService.UpdateAsync(discount);
         return CreateActionResultInstance(response);
     }
