@@ -1,3 +1,5 @@
+using FreeCourse.Services.Discount.Services;
+using FreeCourse.Shared.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -25,6 +27,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.Audience = "resource_discount";
         options.RequireHttpsMetadata = false;
     });
+builder.Services.AddHttpContextAccessor();
+#endregion
+
+#region Services
+builder.Services.AddScoped<IDiscountService, DiscountService>();
+builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 #endregion
 
 var app = builder.Build();
