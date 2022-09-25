@@ -16,6 +16,6 @@ namespace FreeCourse.Shared.Service
 
         public string GetUserId
             => _httpContextAccessor.HttpContext.User
-                .FindFirst(ClaimTypes.NameIdentifier).Value;
+                .FindFirst(JwtRegisteredClaimNames.Sub).Value;
     }
 }
