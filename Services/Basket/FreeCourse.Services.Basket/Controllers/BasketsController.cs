@@ -22,14 +22,14 @@ public class BasketsController : CustomBaseController
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var x = _sharedIdentityService.GetUserId;
-        var response = await _basketService.GetBasketAsync(x);
+        var response = await _basketService.GetBasketAsync(_sharedIdentityService.GetUserId);
         return CreateActionResultInstance(response);
     }
 
     [HttpPost]
     public async Task<IActionResult> AddOrUpdate([FromBody] BasketDto basketDto)
     {
+        basketDto.UserId = _sharedIdentityService.GetUserId;
         var response = await _basketService.SaveOrUpdateAsync(basketDto);
         return CreateActionResultInstance(response);
     }
