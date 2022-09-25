@@ -34,7 +34,7 @@ public class DiscountsController : CustomBaseController
     }
 
     [HttpGet("[action]/{code}")]
-    public async Task<IActionResult> GetByCode([FromQuery] string code)
+    public async Task<IActionResult> GetByCode([FromRoute] string code)
     {
         var response = await _discountService.GetByCodeAndUserId(code, _sharedIdentityService.GetUserId);
         return CreateActionResultInstance(response);

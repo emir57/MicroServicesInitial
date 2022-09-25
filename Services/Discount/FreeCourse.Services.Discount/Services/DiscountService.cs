@@ -32,8 +32,8 @@ public sealed class DiscountService : IDiscountService
 
     public async Task<Response<Models.Discount>> GetByCodeAndUserId(string code, string userId)
     {
-        Models.Discount discount = await _dbConnection.QueryFirstOrDefaultAsync("select * from discount where code=@Code and userid=@UserId"
-            , new { Code = code, UserId = userId });
+        Models.Discount discount = await _dbConnection.QueryFirstOrDefaultAsync<Models.Discount>("select * from discount where code=@Code and userid=@UserId"
+            , new { code, userId });
         if (discount == null)
             return Response<Models.Discount>.Fail("Discount is not found", 404);
         return Response<Models.Discount>.Success(discount, 200);
