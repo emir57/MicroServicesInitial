@@ -2,7 +2,7 @@
 
 namespace FreeCourse.Services.Order.Application.Mapping;
 
-public sealed class ObjectMapper
+public static class ObjectMapper
 {
     public static readonly Lazy<IMapper> lazy = new Lazy<IMapper>(() =>
     {

@@ -9,7 +9,8 @@ public class OrderItemConfig : IEntityTypeConfiguration<OrderItem>
     public void Configure(EntityTypeBuilder<OrderItem> builder)
     {
         builder
-            .ToTable("OrderItems", OrderDbContext.DEFAULT_SCHEMA);
+            .ToTable("OrderItems", OrderDbContext.DEFAULT_SCHEMA)
+            .HasKey(o => o.Id);
 
         builder.Property(o => o.Price)
             .HasColumnType("decimal(18,2)");

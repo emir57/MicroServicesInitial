@@ -8,7 +8,8 @@ public sealed class OrderConfig : IEntityTypeConfiguration<Domain.OrderAggregate
     public void Configure(EntityTypeBuilder<Domain.OrderAggregate.Order> builder)
     {
         builder
-            .ToTable("Orders", OrderDbContext.DEFAULT_SCHEMA);
+            .ToTable("Orders", OrderDbContext.DEFAULT_SCHEMA)
+            .HasKey(o => o.Id);
 
         builder.OwnsOne(o => o.Address)
             .WithOwner();
