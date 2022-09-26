@@ -1,6 +1,7 @@
 using FreeCourse.Services.Order.Application.Consumers;
 using FreeCourse.Services.Order.Application.Features.Commands.CreateOrder;
 using FreeCourse.Services.Order.Infrastructure;
+using FreeCourse.Shared.Messages;
 using FreeCourse.Shared.Service;
 using MassTransit;
 using MediatR;
@@ -57,6 +58,7 @@ builder.Services.AddDbContext<OrderDbContext>(opt => opt.UseSqlServer(builder.Co
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<CreateOrderMessageCommandConsumer>();
+    x.AddConsumer<CourseNameChangedEventConsumer>();
 
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -69,6 +71,10 @@ builder.Services.AddMassTransit(x =>
         cfg.ReceiveEndpoint("create-order-service", e =>
         {
             e.ConfigureConsumer<CreateOrderMessageCommandConsumer>(context);
+        });
+        cfg.ReceiveEndpoint("course-name-changed-event-order-service", e =>
+        {
+            e.ConfigureConsumer<CourseNameChangedEventConsumer>(context);
         });
     });
 });
