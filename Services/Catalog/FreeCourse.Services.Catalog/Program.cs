@@ -49,6 +49,22 @@ builder.Services.AddAutoMapper(typeof(CategoryDto));
 
 var app = builder.Build();
 
+#region 
+
+using (var scope = builder.Services.BuildServiceProvider())
+{
+    var categoryService = scope.GetRequiredService<ICategoryService>();
+    if (categoryService.GetAllAsync().GetAwaiter().GetResult().Data.Any() == false)
+    {
+        categoryService.CreateAsync(new CategoryDto { Name = "Asp.Net" }).GetAwaiter().GetResult();
+        categoryService.CreateAsync(new CategoryDto { Name = "Java" }).GetAwaiter().GetResult();
+    }
+}
+
+
+
+#endregion
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
