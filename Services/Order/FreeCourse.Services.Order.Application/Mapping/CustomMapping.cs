@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FreeCourse.Services.Order.Application.Dtos;
+using FreeCourse.Services.Order.Application.Features.Commands.CreateOrder;
 using FreeCourse.Services.Order.Domain.OrderAggregate;
 
 namespace FreeCourse.Services.Order.Application.Mapping;
@@ -11,5 +12,6 @@ public class CustomMapping : Profile
         CreateMap<OrderDto, Domain.OrderAggregate.Order>().ReverseMap();
         CreateMap<AddressDto, Address>().ReverseMap();
         CreateMap<OrderItemDto, OrderItem>().ReverseMap();
+        CreateMap<CreateOrderCommand, Domain.OrderAggregate.Order>().ReverseMap();
     }
 }

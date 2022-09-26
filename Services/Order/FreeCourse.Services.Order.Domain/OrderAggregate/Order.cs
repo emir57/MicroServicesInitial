@@ -28,7 +28,6 @@ public sealed class Order : Entity, IAggregateRoot
             _orderItems.Add(newOrderItem);
         }
     }
-
     public decimal GetTotalPrice()
         => _orderItems.Sum(o => o.Price);
 }
