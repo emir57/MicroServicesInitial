@@ -1,6 +1,6 @@
 ﻿namespace FreeCourse.Services.Order.Application.Dtos;
 
-public class AddressDto
+public sealed class AddressDto
 {
     public string Province { get; private set; }
     public string District { get; private set; }

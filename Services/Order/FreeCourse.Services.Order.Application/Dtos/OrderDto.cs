@@ -2,7 +2,7 @@
 
 namespace FreeCourse.Services.Order.Application.Dtos;
 
-public class OrderDto
+public sealed class OrderDto
 {
     public int Id { get; set; }
     public DateTime CreatedDate { get; private set; }

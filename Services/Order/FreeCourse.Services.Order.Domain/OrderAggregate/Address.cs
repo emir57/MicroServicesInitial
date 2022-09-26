@@ -2,7 +2,7 @@
 
 namespace FreeCourse.Services.Order.Domain.OrderAggregate;
 
-public class Address : ValueObject
+public sealed class Address : ValueObject
 {
     public Address(string province, string district, string street, string zipCode, string line)
     {

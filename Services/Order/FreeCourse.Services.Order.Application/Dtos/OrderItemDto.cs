@@ -1,6 +1,6 @@
 ﻿namespace FreeCourse.Services.Order.Application.Dtos;
 
-public class OrderItemDto
+public sealed class OrderItemDto
 {
     public int Id { get; set; }
     public string ProductId { get; private set; }

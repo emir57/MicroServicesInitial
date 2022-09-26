@@ -2,7 +2,7 @@
 
 namespace FreeCourse.Services.Order.Domain.OrderAggregate;
 
-public class Order : Entity, IAggregateRoot
+public sealed class Order : Entity, IAggregateRoot
 {
     public DateTime CreatedDate { get; private set; }
     public Address Address { get; private set; }
