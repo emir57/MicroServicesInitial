@@ -4,5 +4,6 @@ Services
 	-Basket_Api => 5013
 	-Discount_Api => 5014
 	-Order_Api => 5015
+	-FakePayment_Api => 5016
 -IdentityServer => http 5001
 
