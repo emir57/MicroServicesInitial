@@ -10,6 +10,11 @@ public class OrderDbContext : DbContext
 
     public OrderDbContext(DbContextOptions<OrderDbContext> options) : base(options) { }
 
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
     public DbSet<Domain.OrderAggregate.Order> Orders { get; set; }
     public DbSet<Domain.OrderAggregate.OrderItem> OrderItems { get; set; }
 

@@ -4,7 +4,7 @@ namespace FreeCourse.Services.Order.Application.Mapping;
 
 public static class ObjectMapper
 {
-    public static readonly Lazy<IMapper> lazy = new Lazy<IMapper>(() =>
+    private static readonly Lazy<IMapper> _lazy = new Lazy<IMapper>(() =>
     {
         var config = new MapperConfiguration(configure =>
         {
@@ -14,4 +14,6 @@ public static class ObjectMapper
         IMapper mapper = config.CreateMapper();
         return mapper;
     });
+
+    public static IMapper Mapper => _lazy.Value;
 }
