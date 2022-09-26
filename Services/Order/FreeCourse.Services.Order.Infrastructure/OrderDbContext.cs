@@ -1,5 +1,4 @@
-﻿using FreeCourse.Services.Order.Domain.OrderAggregate;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace FreeCourse.Services.Order.Infrastructure;

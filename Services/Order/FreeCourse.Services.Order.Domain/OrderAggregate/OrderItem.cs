@@ -4,7 +4,8 @@ namespace FreeCourse.Services.Order.Domain.OrderAggregate;
 
 public sealed class OrderItem : Entity
 {
-    public OrderItem(string productId, string productName, string pictureUrl, decimal price)
+    public OrderItem() { }
+    public OrderItem(string productId, string productName, string pictureUrl, decimal price) : this()
     {
         ProductId = productId;
         ProductName = productName;

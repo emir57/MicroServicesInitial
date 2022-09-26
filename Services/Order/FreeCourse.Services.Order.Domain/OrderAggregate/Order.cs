@@ -11,7 +11,8 @@ public sealed class Order : Entity, IAggregateRoot
 
     public IReadOnlyCollection<OrderItem> OrderItems => _orderItems;
 
-    public Order(string buyerId, Address address)
+    public Order() { }
+    public Order(string buyerId, Address address) : this()
     {
         _orderItems = new();
         CreatedDate = DateTime.Now;
