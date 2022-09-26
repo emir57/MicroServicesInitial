@@ -21,7 +21,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.Authority = builder.Configuration["IdentityServerURL"];
-        options.Audience = "payment_resource";
+        options.Audience = "resource_payment";
         options.RequireHttpsMetadata = false;
     });
 #endregion
