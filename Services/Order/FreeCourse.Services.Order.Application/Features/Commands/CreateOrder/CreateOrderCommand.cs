@@ -1,4 +1,5 @@
 ﻿using FreeCourse.Services.Order.Application.Dtos;
+using FreeCourse.Services.Order.Application.PipelineBehaviors.Logging;
 using FreeCourse.Services.Order.Domain.OrderAggregate;
 using FreeCourse.Services.Order.Infrastructure;
 using FreeCourse.Shared.Dtos;
@@ -6,7 +7,7 @@ using MediatR;
 
 namespace FreeCourse.Services.Order.Application.Features.Commands.CreateOrder;
 
-public sealed class CreateOrderCommand : IRequest<Response<CreatedOrderDto>>
+public sealed class CreateOrderCommand : IRequest<Response<CreatedOrderDto>>, ILoggableRequest
 {
     public string BuyerId { get; set; }
     public List<OrderItemDto> OrderItems { get; set; }
