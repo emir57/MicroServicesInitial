@@ -1,6 +1,7 @@
 using FreeCourse.Services.Order.Application.Consumers;
 using FreeCourse.Services.Order.Application.Features.Commands.CreateOrder;
 using FreeCourse.Services.Order.Application.PipelineBehaviors.Logging;
+using FreeCourse.Services.Order.Application.PipelineBehaviors.Performance;
 using FreeCourse.Services.Order.Infrastructure;
 using FreeCourse.Shared.Service;
 using MassTransit;
@@ -55,6 +56,7 @@ builder.Services.AddDbContext<OrderDbContext>(opt => opt.UseSqlServer(builder.Co
 
 #region Pipelines
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LogPipeline<,>));
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformancingRequest<,>));
 #endregion
 
 #region MassTransit
