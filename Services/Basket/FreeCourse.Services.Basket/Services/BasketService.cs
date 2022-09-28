@@ -1,4 +1,5 @@
-﻿using FreeCourse.Services.Basket.Dtos;
+﻿using FreeCourse.Services.Basket.Constants;
+using FreeCourse.Services.Basket.Dtos;
 using FreeCourse.Shared.Dtos;
 using StackExchange.Redis;
 using System.Text.Json;
@@ -19,14 +20,14 @@ public sealed class BasketService : IBasketService
         bool result = await _redisService.GetDb().KeyDeleteAsync(userId);
         return result ?
             Response<bool>.Success(204) :
-            Response<bool>.Fail("Basket could not delete", 500);
+            Response<bool>.Fail(BasketServiceMessages.DeletedFail, 500);
     }
 
     public async Task<Response<BasketDto>> GetBasketAsync(string userId)
     {
         RedisValue existBasket = await _redisService.GetDb().StringGetAsync(userId);
         if (String.IsNullOrEmpty(existBasket))
-            return Response<BasketDto>.Fail("Basket not found", 404);
+            return Response<BasketDto>.Fail(BasketServiceMessages.BasketNotFound, 404);
 
         BasketDto basketDto = JsonSerializer.Deserialize<BasketDto>(existBasket);
         return Response<BasketDto>.Success(basketDto, 200);
@@ -37,6 +38,6 @@ public sealed class BasketService : IBasketService
         bool result = await _redisService.GetDb().StringSetAsync(basketDto.UserId, JsonSerializer.Serialize(basketDto));
         return result ?
             Response<bool>.Success(204) :
-            Response<bool>.Fail("Basket could not update or save", 500);
+            Response<bool>.Fail(BasketServiceMessages.SavedOrUpdatedFail, 500);
     }
 }
