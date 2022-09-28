@@ -3,6 +3,8 @@ using FreeCourse.Services.Order.Application.Features.Commands.CreateOrder;
 using FreeCourse.Services.Order.Application.PipelineBehaviors.Logging;
 using FreeCourse.Services.Order.Application.PipelineBehaviors.Performance;
 using FreeCourse.Services.Order.Infrastructure;
+using FreeCourse.Shared.CrossCuttingConcerns.Serilog;
+using FreeCourse.Shared.CrossCuttingConcerns.Serilog.Logger;
 using FreeCourse.Shared.Messages;
 using FreeCourse.Shared.Service;
 using MassTransit;
@@ -59,6 +61,8 @@ builder.Services.AddDbContext<OrderDbContext>(opt => opt.UseSqlServer(builder.Co
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LogPipeline<,>));
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformancingRequest<,>));
 #endregion
+
+builder.Services.AddScoped<LoggerServiceBase, FileLogger>();
 
 #region MassTransit
 //Default Port: 5672
