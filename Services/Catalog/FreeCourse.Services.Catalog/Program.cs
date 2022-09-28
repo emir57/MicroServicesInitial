@@ -64,7 +64,6 @@ builder.Services.AddMassTransit(x =>
 var app = builder.Build();
 
 #region Insert Categories
-
 using (var scope = builder.Services.BuildServiceProvider())
 {
     var categoryService = scope.GetRequiredService<ICategoryService>();
@@ -74,9 +73,6 @@ using (var scope = builder.Services.BuildServiceProvider())
         categoryService.CreateAsync(new CategoryDto { Name = "Java" }).GetAwaiter().GetResult();
     }
 }
-
-
-
 #endregion
 
 // Configure the HTTP request pipeline.
