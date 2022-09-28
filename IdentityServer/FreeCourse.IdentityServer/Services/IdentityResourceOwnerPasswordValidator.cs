@@ -22,24 +22,25 @@ namespace FreeCourse.IdentityServer.Services
 
             if (existUser == null)
             {
-                var errors = new Dictionary<string, object>();
-                errors.Add("errors", new List<string> { "Email veya şifreniz yanlış" });
-                context.Result.CustomResponse = errors;
-
+                setError();
                 return;
             }
             var passwordCheck = await _userManager.CheckPasswordAsync(existUser, context.Password);
 
             if (passwordCheck == false)
             {
-                var errors = new Dictionary<string, object>();
-                errors.Add("errors", new List<string> { "Email veya şifreniz yanlış" });
-                context.Result.CustomResponse = errors;
-
+                setError();
                 return;
             }
 
             context.Result = new GrantValidationResult(existUser.Id.ToString(), OidcConstants.AuthenticationMethods.Password);
+
+            void setError(params string[] messages)
+            {
+                var errors = new Dictionary<string, object>();
+                errors.Add("errors", messages);
+                context.Result.CustomResponse = errors;
+            }
         }
     }
 }
