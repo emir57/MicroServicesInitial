@@ -63,7 +63,7 @@ builder.Services.AddMassTransit(x =>
 
 var app = builder.Build();
 
-#region 
+#region Insert Categories
 
 using (var scope = builder.Services.BuildServiceProvider())
 {
