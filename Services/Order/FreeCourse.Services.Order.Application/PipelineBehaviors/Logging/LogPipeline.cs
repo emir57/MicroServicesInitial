@@ -1,11 +1,7 @@
 ﻿using FreeCourse.Shared.CrossCuttingConcerns;
-using FreeCourse.Shared.CrossCuttingConcerns.Serilog;
 using FreeCourse.Shared.Messages;
 using MassTransit;
 using MediatR;
-using System.Diagnostics;
-using System.Reflection;
-using System.Text.Json;
 
 namespace FreeCourse.Services.Order.Application.PipelineBehaviors.Logging;
 

@@ -3,8 +3,6 @@ using FreeCourse.Services.Order.Application.Features.Commands.CreateOrder;
 using FreeCourse.Services.Order.Application.PipelineBehaviors.Logging;
 using FreeCourse.Services.Order.Application.PipelineBehaviors.Performance;
 using FreeCourse.Services.Order.Infrastructure;
-using FreeCourse.Shared.CrossCuttingConcerns.Serilog;
-using FreeCourse.Shared.CrossCuttingConcerns.Serilog.Logger;
 using FreeCourse.Shared.Messages;
 using FreeCourse.Shared.Service;
 using MassTransit;

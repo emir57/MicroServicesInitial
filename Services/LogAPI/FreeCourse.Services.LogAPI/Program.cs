@@ -1,6 +1,6 @@
+using FreeCourse.Services.LogAPI;
 using FreeCourse.Services.LogAPI.Consumers;
-using FreeCourse.Shared.CrossCuttingConcerns.Serilog;
-using FreeCourse.Shared.CrossCuttingConcerns.Serilog.Logger;
+using FreeCourse.Services.LogAPI.Serilog.Logger;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 

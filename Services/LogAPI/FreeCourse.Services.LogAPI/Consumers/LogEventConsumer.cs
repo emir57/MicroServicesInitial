@@ -1,5 +1,4 @@
-﻿using FreeCourse.Shared.CrossCuttingConcerns.Serilog;
-using FreeCourse.Shared.Messages;
+﻿using FreeCourse.Shared.Messages;
 using MassTransit;
 using System.Text.Json;
 

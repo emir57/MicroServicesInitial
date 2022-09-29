@@ -1,8 +1,8 @@
-﻿using Serilog;
+﻿using ILogger = Serilog.ILogger;
 
-namespace FreeCourse.Shared.CrossCuttingConcerns.Serilog
+namespace FreeCourse.Services.LogAPI
 {
-    public abstract class LoggerServiceBase
+    public class LoggerServiceBase
     {
         protected ILogger Logger { get; set; }
 
@@ -12,7 +12,5 @@ namespace FreeCourse.Shared.CrossCuttingConcerns.Serilog
         public void Fatal(string message) => Logger.Fatal(message);
         public void Warn(string message) => Logger.Warning(message);
         public void Error(string message) => Logger.Error(message);
-
-
     }
 }
