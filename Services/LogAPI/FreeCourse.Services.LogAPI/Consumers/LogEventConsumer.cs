@@ -18,7 +18,7 @@ public class LogEventConsumer : IConsumer<LogEvent>
         return Task.Run(() =>
         {
             string logMessage = JsonSerializer.Serialize(context.Message);
-            _loggerServiceBase.Debug(logMessage);
+            _loggerServiceBase.Info(logMessage);
         });
     }
 }
