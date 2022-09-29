@@ -1,4 +1,5 @@
 ﻿using FreeCourse.Shared.CrossCuttingConcerns.Serilog;
+using FreeCourse.Shared.Exceptions.Logging;
 using System.Diagnostics;
 
 namespace FreeCourse.Services.LogAPI.Extensions;
@@ -49,41 +50,6 @@ public static class LogServiceExtensions
         {
             Debug.WriteLine("Add successfully logger");
             GC.SuppressFinalize(this);
-        }
-    }
-
-    public class WrongLoggingTypeException : Exception
-    {
-        public WrongLoggingTypeException() : base("Wrong logging type") { }
-
-        public WrongLoggingTypeException(string? message) : base(message) { }
-
-        public WrongLoggingTypeException(string? message, Exception? innerException) : base(message, innerException) { }
-
-        public static void ThrowIfWrongLoggingType(Type type, object obj)
-        {
-            if (type.IsAssignableFrom(obj.GetType()) == false)
-                throw new WrongLoggingTypeException();
-        }
-        public static void ThrowIfWrongLoggingType(Type arg1, Type arg2)
-        {
-            if (arg1.IsAssignableFrom(arg2) == false)
-                throw new WrongLoggingTypeException();
-        }
-    }
-
-    public class LoggerNullException : Exception
-    {
-        public LoggerNullException() : base("Logger is not null") { }
-
-        public LoggerNullException(string? message) : base(message) { }
-
-        public LoggerNullException(string? message, Exception? innerException) : base(message, innerException) { }
-
-        public static void ThrowIfNull(object obj)
-        {
-            if (obj is null)
-                throw new LoggerNullException();
         }
     }
 }
