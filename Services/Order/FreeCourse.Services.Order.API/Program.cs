@@ -62,8 +62,6 @@ builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LogPipeline<,>))
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformancingRequest<,>));
 #endregion
 
-builder.Services.AddScoped<LoggerServiceBase, FileLogger>();
-
 #region MassTransit
 //Default Port: 5672
 builder.Services.AddMassTransit(x =>
