@@ -28,6 +28,7 @@ namespace FreeCourse.Services.Order.Application.PipelineBehaviors
             {
                 if (isSuccess)
                     OnSuccess(request, cancellationToken, next);
+                OnAfter(request, cancellationToken, next);
             }
         }
     }

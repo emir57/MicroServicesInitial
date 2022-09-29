@@ -27,6 +27,7 @@ public sealed class CreateOrderCommand : IRequest<Response<CreatedOrderDto>>, IL
 
         public async Task<Response<CreatedOrderDto>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
+            await Task.Delay(1000);
             Address address = new(request.Address.Province, request.Address.District,
                 request.Address.Street, request.Address.ZipCode, request.Address.Line);
 
