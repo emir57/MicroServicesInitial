@@ -1,3 +1,5 @@
+using FreeCourse.Shared.CrossCuttingConcerns.Serilog;
+using FreeCourse.Shared.CrossCuttingConcerns.Serilog.Logger;
 using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +26,10 @@ builder.Services.AddMassTransit(x =>
 
 
 });
+#endregion
+
+#region LoggerServiceBase
+builder.Services.AddScoped<LoggerServiceBase, FileLogger>();
 #endregion
 
 
