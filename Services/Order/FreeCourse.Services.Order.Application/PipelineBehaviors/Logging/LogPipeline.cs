@@ -1,5 +1,7 @@
 ﻿using FreeCourse.Shared.CrossCuttingConcerns;
 using FreeCourse.Shared.CrossCuttingConcerns.Serilog;
+using FreeCourse.Shared.Messages;
+using MassTransit;
 using MediatR;
 using System.Diagnostics;
 using System.Reflection;
@@ -10,10 +12,10 @@ namespace FreeCourse.Services.Order.Application.PipelineBehaviors.Logging;
 public class LogPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>, ILoggableRequest
 {
-    LoggerServiceBase _loggerServiceBase;
-    public LogPipeline(LoggerServiceBase loggerServiceBase)
+    private readonly IPublishEndpoint _publishEndpoint;
+    public LogPipeline(IPublishEndpoint publishEndpoint)
     {
-        _loggerServiceBase = loggerServiceBase;
+        _publishEndpoint = publishEndpoint;
     }
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
@@ -22,7 +24,7 @@ public class LogPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TRes
             MethodName = next.Method.Name,
             Parameters = getParameters(next)
         };
-        _loggerServiceBase.Info(JsonSerializer.Serialize(logDetail));
+        await _publishEndpoint.Publish<LogEvent>(logDetail);
         return await next();
     }
 
