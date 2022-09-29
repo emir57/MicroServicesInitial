@@ -17,15 +17,20 @@ public class LogPipeline<TRequest, TResponse> : BasePipeline<TRequest, TResponse
 
     protected async override void OnBefore(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
-        LogDetail logDetail = new()
-        {
-            MethodName = typeof(TRequest).FullName,
-            Parameters = getProperties(request)
-        };
-        await _publishEndpoint.Publish<LogEvent>(logDetail);
+        LogEvent logEvent = getMethodDetail(request);
+        await _publishEndpoint.Publish<LogEvent>(logEvent);
     }
 
-    private List<LogParameter> getProperties(object obj)
+
+    private LogEvent getMethodDetail(TRequest request)
+    {
+        return new LogEvent
+        {
+            Parameters = getParameters(request),
+            MethodName = request.GetType().FullName
+        };
+    }
+    private List<LogParameter> getParameters(object obj)
     {
         PropertyInfo[]? properties = obj.GetType().GetProperties();
         return obj.GetType().GetProperties().Select(x => new LogParameter

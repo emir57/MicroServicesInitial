@@ -23,21 +23,24 @@ namespace FreeCourse.Services.Order.Application.PipelineBehaviors.ExceptionLoggi
 
         private ExceptionLogEvent GetExceptionMethodDetail(TRequest request, Exception e)
         {
-            List<LogParameter> logParameters = request.GetType().GetProperties().Select(r => new LogParameter
+            ExceptionLogEvent logDetailWithException = new()
+            {
+                MethodName = request.GetType().FullName,
+                Parameters = getParameters(request),
+                ExceptionMessage = e.Message
+            };
+
+            return logDetailWithException;
+        }
+
+        private List<LogParameter> getParameters(TRequest request)
+        {
+            return request.GetType().GetProperties().Select(r => new LogParameter
             {
                 Name = r.Name,
                 Type = r.GetType().ToString(),
                 Value = r.GetValue(request)
             }).ToList();
-
-            ExceptionLogEvent logDetailWithException = new()
-            {
-                MethodName = request.GetType().FullName,
-                Parameters = logParameters,
-                ExceptionMessage = e.Message
-            };
-
-            return logDetailWithException;
         }
     }
 }
