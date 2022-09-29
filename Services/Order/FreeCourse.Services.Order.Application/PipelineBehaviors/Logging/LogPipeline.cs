@@ -2,6 +2,7 @@
 using FreeCourse.Shared.Messages;
 using MassTransit;
 using MediatR;
+using System.Reflection;
 
 namespace FreeCourse.Services.Order.Application.PipelineBehaviors.Logging;
 
@@ -17,20 +18,21 @@ public class LogPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TRes
     {
         LogDetail logDetail = new()
         {
-            MethodName = next.Method.Name,
-            Parameters = getParameters(next)
+            MethodName = typeof(TRequest).FullName,
+            Parameters = getProperties(request)
         };
         await _publishEndpoint.Publish<LogEvent>(logDetail);
         return await next();
     }
 
-    private List<LogParameter> getParameters(RequestHandlerDelegate<TResponse> next)
+    private List<LogParameter> getProperties(object obj)
     {
-        return next.Method.GetParameters().Select(x => new LogParameter
+        PropertyInfo[]? properties = obj.GetType().GetProperties();
+        return obj.GetType().GetProperties().Select(x => new LogParameter
         {
             Name = x.Name,
             Type = x.GetType().ToString(),
-            Value = x.DefaultValue
+            Value = x.GetValue(obj)
         }).ToList();
     }
 }
