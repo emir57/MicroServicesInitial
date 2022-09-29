@@ -1,5 +1,7 @@
 using FreeCourse.Services.LogAPI;
 using FreeCourse.Services.LogAPI.Consumers;
+using FreeCourse.Services.LogAPI.Extensions;
+using FreeCourse.Shared.CrossCuttingConcerns;
 using FreeCourse.Shared.CrossCuttingConcerns.Serilog;
 using FreeCourse.Shared.CrossCuttingConcerns.Serilog.Loggers;
 using MassTransit;
@@ -54,7 +56,20 @@ builder.Services.AddMassTransit(x =>
 #endregion
 
 #region LoggerServiceBase
-builder.Services.AddScoped<LoggerServiceBase, FileLogger>();
+
+builder.Services.AddLogger(cfg =>
+{
+    cfg.Logger = new FileLogger(builder.Configuration);
+});
+
+#region Add Logger Type
+//builder.Services.AddLogger(() => typeof(FileLogger));
+#endregion
+
+#region Add Logger Instance
+//builder.Services.AddLogger(() => new FileLogger(builder.Configuration));
+#endregion
+//builder.Services.AddScoped<LoggerServiceBase, FileLogger>();
 #endregion
 
 
