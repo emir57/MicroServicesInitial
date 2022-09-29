@@ -11,7 +11,7 @@ namespace FreeCourse.Shared.CrossCuttingConcerns.Serilog.Loggers
             _configuration = configuration;
 
             Logger = new LoggerConfiguration()
-                .WriteTo.Seq(_configuration["SeqLogConfiguration:Host"].ToString())
+                .WriteTo.Seq(_configuration["SeriLogConfigurations:SeqLogConfiguration:Host"].ToString())
                 .CreateLogger();
         }
     }

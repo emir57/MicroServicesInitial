@@ -59,7 +59,7 @@ builder.Services.AddMassTransit(x =>
 
 builder.Services.AddLogger(cfg =>
 {
-    cfg.Logger = new SeqLogger();
+    cfg.Logger = new SeqLogger(builder.Configuration);
 });
 
 #region Add Logger Type
