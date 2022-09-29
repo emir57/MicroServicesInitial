@@ -1,5 +1,6 @@
 ﻿using FreeCourse.Shared.CrossCuttingConcerns;
 using FreeCourse.Shared.CrossCuttingConcerns.Serilog;
+using MassTransit;
 using MediatR;
 using System.Text.Json;
 
@@ -8,11 +9,11 @@ namespace FreeCourse.Services.Order.Application.PipelineBehaviors.ExceptionLoggi
     public sealed class ExceptionLogPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
-        private readonly LoggerServiceBase _loggerServiceBase;
+        private readonly ISendEndpointProvider _sendEndpointProvider;
 
-        public ExceptionLogPipeline(LoggerServiceBase loggerServiceBase)
+        public ExceptionLogPipeline(ISendEndpointProvider sendEndpointProvider)
         {
-            _loggerServiceBase = loggerServiceBase;
+            _sendEndpointProvider = sendEndpointProvider;
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -23,13 +24,13 @@ namespace FreeCourse.Services.Order.Application.PipelineBehaviors.ExceptionLoggi
             }
             catch (Exception ex)
             {
-                string logDetailWithException = GetExceptionMethodDetail(request, ex);
-                _loggerServiceBase.Error(logDetailWithException);
+                LogDetailWithException logDetailWithException = GetExceptionMethodDetail(request, ex);
+                await _sendEndpointProvider.Send(logDetailWithException);
                 throw;
             }
         }
 
-        private string GetExceptionMethodDetail(TRequest request, Exception e)
+        private LogDetailWithException GetExceptionMethodDetail(TRequest request, Exception e)
         {
             List<LogParameter> logParameters = request.GetType().GetProperties().Select(r => new LogParameter
             {
@@ -45,7 +46,7 @@ namespace FreeCourse.Services.Order.Application.PipelineBehaviors.ExceptionLoggi
                 ExceptionMessage = e.Message
             };
 
-            return JsonSerializer.Serialize(logDetailWithException);
+            return logDetailWithException;
         }
     }
 }

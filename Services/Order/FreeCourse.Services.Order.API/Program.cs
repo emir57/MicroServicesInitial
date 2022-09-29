@@ -1,5 +1,6 @@
 using FreeCourse.Services.Order.Application.Consumers;
 using FreeCourse.Services.Order.Application.Features.Commands.CreateOrder;
+using FreeCourse.Services.Order.Application.PipelineBehaviors.ExceptionLogging;
 using FreeCourse.Services.Order.Application.PipelineBehaviors.Logging;
 using FreeCourse.Services.Order.Application.PipelineBehaviors.Performance;
 using FreeCourse.Services.Order.Infrastructure;
@@ -56,6 +57,7 @@ builder.Services.AddDbContext<OrderDbContext>(opt => opt.UseSqlServer(builder.Co
 #endregion
 
 #region Pipelines
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ExceptionLogPipeline<,>));
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LogPipeline<,>));
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformancingRequest<,>));
 #endregion
