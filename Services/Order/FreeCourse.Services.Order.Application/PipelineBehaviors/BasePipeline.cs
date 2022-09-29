@@ -10,7 +10,7 @@ namespace FreeCourse.Services.Order.Application.PipelineBehaviors
         protected virtual void OnException(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next, Exception e) { }
         protected virtual void OnSuccess(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next) { }
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public virtual async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             bool isSuccess = true;
             OnBefore(request, cancellationToken, next);

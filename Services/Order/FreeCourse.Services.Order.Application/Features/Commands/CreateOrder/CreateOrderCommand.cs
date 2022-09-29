@@ -27,7 +27,6 @@ public sealed class CreateOrderCommand : IRequest<Response<CreatedOrderDto>>, IL
 
         public async Task<Response<CreatedOrderDto>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            throw new Exception("Request is not null");
             Address address = new(request.Address.Province, request.Address.District,
                 request.Address.Street, request.Address.ZipCode, request.Address.Line);
 

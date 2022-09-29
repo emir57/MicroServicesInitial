@@ -5,7 +5,7 @@ using MediatR;
 
 namespace FreeCourse.Services.Order.Application.PipelineBehaviors.ExceptionLogging
 {
-    public sealed class ExceptionLogPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public sealed class ExceptionLogPipeline<TRequest, TResponse> : BasePipeline<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
         private readonly IPublishEndpoint _publishEndpoint;
@@ -15,18 +15,10 @@ namespace FreeCourse.Services.Order.Application.PipelineBehaviors.ExceptionLoggi
             _publishEndpoint = publishEndpoint;
         }
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        protected async override void OnException(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next, Exception e)
         {
-            try
-            {
-                return await next();
-            }
-            catch (Exception ex)
-            {
-                ExceptionLogEvent logDetailWithException = GetExceptionMethodDetail(request, ex);
-                await _publishEndpoint.Publish<ExceptionLogEvent>(logDetailWithException);
-                throw;
-            }
+            ExceptionLogEvent logDetailWithException = GetExceptionMethodDetail(request, e);
+            await _publishEndpoint.Publish<ExceptionLogEvent>(logDetailWithException);
         }
 
         private ExceptionLogEvent GetExceptionMethodDetail(TRequest request, Exception e)

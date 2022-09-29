@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace FreeCourse.Services.Order.Application.PipelineBehaviors.Logging;
 
-public class LogPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class LogPipeline<TRequest, TResponse> : BasePipeline<TRequest, TResponse>
     where TRequest : IRequest<TResponse>, ILoggableRequest
 {
     private readonly IPublishEndpoint _publishEndpoint;
@@ -14,7 +14,8 @@ public class LogPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TRes
     {
         _publishEndpoint = publishEndpoint;
     }
-    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+
+    protected async override void OnBefore(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
         LogDetail logDetail = new()
         {
@@ -22,7 +23,6 @@ public class LogPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TRes
             Parameters = getProperties(request)
         };
         await _publishEndpoint.Publish<LogEvent>(logDetail);
-        return await next();
     }
 
     private List<LogParameter> getProperties(object obj)
