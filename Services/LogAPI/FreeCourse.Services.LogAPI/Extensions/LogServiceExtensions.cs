@@ -6,9 +6,9 @@ namespace FreeCourse.Services.LogAPI.Extensions;
 
 public static class LogServiceExtensions
 {
-    public static IServiceCollection AddLogger(this IServiceCollection services, Action<LoggerConfiguration> action)
+    public static IServiceCollection AddLogger(this IServiceCollection services, Action<LoggerConfigurations> action)
     {
-        using LoggerConfiguration loggerSettings = new LoggerConfiguration();
+        using LoggerConfigurations loggerSettings = new LoggerConfigurations();
 
         action(loggerSettings);
 

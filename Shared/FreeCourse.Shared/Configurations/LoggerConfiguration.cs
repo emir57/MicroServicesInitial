@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace FreeCourse.Shared.Configurations
 {
-    public class LoggerConfiguration : IDisposable
+    public class LoggerConfigurations : IDisposable
     {
         public LoggerServiceBase Logger { get; set; }
 
