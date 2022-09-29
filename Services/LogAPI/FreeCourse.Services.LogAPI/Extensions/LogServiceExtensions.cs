@@ -1,6 +1,6 @@
-﻿using FreeCourse.Shared.CrossCuttingConcerns.Serilog;
+﻿using FreeCourse.Shared.Configurations;
+using FreeCourse.Shared.CrossCuttingConcerns.Serilog;
 using FreeCourse.Shared.Exceptions.Logging;
-using System.Diagnostics;
 
 namespace FreeCourse.Services.LogAPI.Extensions;
 
@@ -40,16 +40,5 @@ public static class LogServiceExtensions
         LoggerServiceBase logger = loggerFunc();
         services.AddScoped<LoggerServiceBase>(sp => logger);
         return services;
-    }
-
-    public class LoggerConfiguration : IDisposable
-    {
-        public LoggerServiceBase Logger { get; set; }
-
-        public void Dispose()
-        {
-            Debug.WriteLine("Add successfully logger");
-            GC.SuppressFinalize(this);
-        }
     }
 }
