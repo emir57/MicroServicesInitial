@@ -33,13 +33,19 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(typeof(CreateOrderCommand));
 #endregion
 
+#region Pipeline Behaviors
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ExceptionLoggingPipelineBehavior<,>));
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformancePipelineBehavior<,>));
+#endregion
+
 #region ContextAccessor and SharedIdentity
 builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 
 builder.Services.AddHttpContextAccessor();
 #endregion
 
-#region
+#region JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -54,12 +60,6 @@ builder.Services.AddDbContext<OrderDbContext>(opt => opt.UseSqlServer(builder.Co
 {
     configure.MigrationsAssembly("FreeCourse.Services.Order.Infrastructure");
 }));
-#endregion
-
-#region Pipelines
-builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ExceptionLogPipeline<,>));
-builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LogPipeline<,>));
-builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformancingRequest<,>));
 #endregion
 
 #region MassTransit

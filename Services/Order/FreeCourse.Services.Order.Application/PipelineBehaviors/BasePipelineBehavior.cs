@@ -2,7 +2,7 @@
 
 namespace FreeCourse.Services.Order.Application.PipelineBehaviors
 {
-    public abstract class BasePipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public abstract class BasePipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
         protected virtual void OnBefore(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next) { }
