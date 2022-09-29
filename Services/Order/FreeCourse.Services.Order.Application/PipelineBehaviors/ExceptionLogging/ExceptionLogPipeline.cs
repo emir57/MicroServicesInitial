@@ -1,19 +1,18 @@
 ﻿using FreeCourse.Shared.CrossCuttingConcerns;
-using FreeCourse.Shared.CrossCuttingConcerns.Serilog;
+using FreeCourse.Shared.Messages;
 using MassTransit;
 using MediatR;
-using System.Text.Json;
 
 namespace FreeCourse.Services.Order.Application.PipelineBehaviors.ExceptionLogging
 {
     public sealed class ExceptionLogPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
-        private readonly ISendEndpointProvider _sendEndpointProvider;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public ExceptionLogPipeline(ISendEndpointProvider sendEndpointProvider)
+        public ExceptionLogPipeline(IPublishEndpoint publishEndpoint)
         {
-            _sendEndpointProvider = sendEndpointProvider;
+            _publishEndpoint = publishEndpoint;
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -24,22 +23,22 @@ namespace FreeCourse.Services.Order.Application.PipelineBehaviors.ExceptionLoggi
             }
             catch (Exception ex)
             {
-                LogDetailWithException logDetailWithException = GetExceptionMethodDetail(request, ex);
-                await _sendEndpointProvider.Send(logDetailWithException);
+                ExceptionLogEvent logDetailWithException = GetExceptionMethodDetail(request, ex);
+                await _publishEndpoint.Publish<ExceptionLogEvent>(logDetailWithException);
                 throw;
             }
         }
 
-        private LogDetailWithException GetExceptionMethodDetail(TRequest request, Exception e)
+        private ExceptionLogEvent GetExceptionMethodDetail(TRequest request, Exception e)
         {
             List<LogParameter> logParameters = request.GetType().GetProperties().Select(r => new LogParameter
             {
                 Name = r.Name,
                 Type = r.GetType().ToString(),
-                Value = r
+                Value = r.GetValue(request)
             }).ToList();
 
-            LogDetailWithException logDetailWithException = new()
+            ExceptionLogEvent logDetailWithException = new()
             {
                 MethodName = request.GetType().FullName,
                 Parameters = logParameters,

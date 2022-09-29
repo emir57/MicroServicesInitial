@@ -19,7 +19,7 @@ public class ExceptionLogEventConsumer : IConsumer<ExceptionLogEvent>
         return Task.Run(() =>
         {
             string logMessage = JsonSerializer.Serialize(context.Message);
-            _loggerServiceBase.Error(logMessage);
+            _loggerServiceBase.Fatal(logMessage);
         });
     }
 }

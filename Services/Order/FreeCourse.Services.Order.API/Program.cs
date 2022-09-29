@@ -58,8 +58,8 @@ builder.Services.AddDbContext<OrderDbContext>(opt => opt.UseSqlServer(builder.Co
 
 #region Pipelines
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ExceptionLogPipeline<,>));
-builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LogPipeline<,>));
-builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformancingRequest<,>));
+//builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LogPipeline<,>));
+//builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformancingRequest<,>));
 #endregion
 
 #region MassTransit
