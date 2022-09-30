@@ -4,6 +4,7 @@ using FreeCourse.Services.Order.Application.Features.Commands.CreateOrder;
 using FreeCourse.Services.Order.Application.PipelineBehaviors.ExceptionLogging;
 using FreeCourse.Services.Order.Application.PipelineBehaviors.Logging;
 using FreeCourse.Services.Order.Application.PipelineBehaviors.Performance;
+using FreeCourse.Services.Order.Application.PipelineBehaviors.Validation;
 using FreeCourse.Services.Order.Infrastructure;
 using FreeCourse.Shared.Messages;
 using FreeCourse.Shared.Service;
@@ -38,6 +39,7 @@ builder.Services.AddMediatR(typeof(CreateOrderCommand));
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ExceptionLoggingPipelineBehavior<,>));
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformancePipelineBehavior<,>));
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
 #endregion
 
 #region ContextAccessor and SharedIdentity
