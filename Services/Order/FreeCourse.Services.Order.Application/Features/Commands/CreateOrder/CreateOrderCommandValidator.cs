@@ -32,22 +32,22 @@ public sealed class CreateOrderCommandValidator : AbstractValidator<CreateOrderC
             .NotNull();
 
 
-        RuleForEach(c => c.OrderItems).SetValidator(new OrderItemDtoValidator());
+        //RuleForEach(c => c.OrderItems).SetValidator(new OrderItemDtoValidator());
 
     }
 }
 
-public sealed class OrderItemDtoValidator : AbstractValidator<OrderItemDto>
-{
-    public OrderItemDtoValidator()
-    {
-        RuleFor(o => o.ProductName)
-            .NotEmpty()
-            .NotNull();
+//public sealed class OrderItemDtoValidator : AbstractValidator<OrderItemDto>
+//{
+//    public OrderItemDtoValidator()
+//    {
+//        RuleFor(o => o.ProductName)
+//            .NotEmpty()
+//            .NotNull();
 
-        RuleFor(o => o.Price)
-            .NotEmpty()
-            .NotNull()
-            .GreaterThan(0);
-    }
-}
+//        RuleFor(o => o.Price)
+//            .NotEmpty()
+//            .NotNull()
+//            .GreaterThan(0);
+//    }
+//}
