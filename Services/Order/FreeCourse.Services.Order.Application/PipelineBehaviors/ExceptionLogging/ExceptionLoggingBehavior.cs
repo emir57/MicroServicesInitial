@@ -5,12 +5,12 @@ using MediatR;
 
 namespace FreeCourse.Services.Order.Application.PipelineBehaviors.ExceptionLogging
 {
-    public sealed class ExceptionLoggingPipelineBehavior<TRequest, TResponse> : BasePipelineBehavior<TRequest, TResponse>
+    public sealed class ExceptionLoggingBehavior<TRequest, TResponse> : BasePipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public ExceptionLoggingPipelineBehavior(IPublishEndpoint publishEndpoint)
+        public ExceptionLoggingBehavior(IPublishEndpoint publishEndpoint)
         {
             _publishEndpoint = publishEndpoint;
         }

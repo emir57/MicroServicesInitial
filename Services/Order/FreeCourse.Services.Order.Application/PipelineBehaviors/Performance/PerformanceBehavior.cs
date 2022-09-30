@@ -4,11 +4,11 @@ using System.Diagnostics;
 
 namespace FreeCourse.Services.Order.Application.PipelineBehaviors.Performance;
 
-public class PerformancePipelineBehavior<TRequest, TResponse> : BasePipelineBehavior<TRequest, TResponse>
+public class PerformanceBehavior<TRequest, TResponse> : BasePipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>, IPerformanceRequest
 {
     private Stopwatch _stopwatch;
-    public PerformancePipelineBehavior()
+    public PerformanceBehavior()
     {
 
     }

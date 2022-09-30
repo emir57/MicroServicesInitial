@@ -36,10 +36,10 @@ builder.Services.AddMediatR(typeof(CreateOrderCommand));
 #endregion
 
 #region Pipeline Behaviors
-builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ExceptionLoggingPipelineBehavior<,>));
-builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
-builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformancePipelineBehavior<,>));
-builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ExceptionLoggingBehavior<,>));
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformanceBehavior<,>));
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 #endregion
 
 #region ContextAccessor and SharedIdentity

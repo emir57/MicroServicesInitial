@@ -6,11 +6,11 @@ using System.Reflection;
 
 namespace FreeCourse.Services.Order.Application.PipelineBehaviors.Logging;
 
-public class LoggingPipelineBehavior<TRequest, TResponse> : BasePipelineBehavior<TRequest, TResponse>
+public class LoggingBehavior<TRequest, TResponse> : BasePipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>, ILoggableRequest
 {
     private readonly IPublishEndpoint _publishEndpoint;
-    public LoggingPipelineBehavior(IPublishEndpoint publishEndpoint)
+    public LoggingBehavior(IPublishEndpoint publishEndpoint)
     {
         _publishEndpoint = publishEndpoint;
     }
