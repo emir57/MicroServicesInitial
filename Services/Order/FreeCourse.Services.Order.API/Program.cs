@@ -1,3 +1,4 @@
+using FluentValidation;
 using FreeCourse.Services.Order.Application.Consumers;
 using FreeCourse.Services.Order.Application.Features.Commands.CreateOrder;
 using FreeCourse.Services.Order.Application.PipelineBehaviors.ExceptionLogging;
@@ -87,6 +88,10 @@ builder.Services.AddMassTransit(x =>
         });
     });
 });
+#endregion
+
+#region FluentValidationAssembly
+builder.Services.AddValidatorsFromAssembly(typeof(CreateOrderCommandValidator).Assembly);
 #endregion
 
 var app = builder.Build();
