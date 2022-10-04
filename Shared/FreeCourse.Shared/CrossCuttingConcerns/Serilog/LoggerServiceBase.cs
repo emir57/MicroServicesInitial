@@ -12,7 +12,5 @@ namespace FreeCourse.Shared.CrossCuttingConcerns.Serilog
         public void Fatal(string message) => Logger.Fatal(message);
         public void Warn(string message) => Logger.Warning(message);
         public void Error(string message) => Logger.Error(message);
-
-
     }
 }

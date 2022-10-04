@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Serilog;
 using System.IO;
 
-namespace FreeCourse.Shared.CrossCuttingConcerns.Serilog.Logger
+namespace FreeCourse.Shared.CrossCuttingConcerns.Serilog.Loggers
 {
     public class FileLogger : LoggerServiceBase
     {
@@ -14,8 +14,8 @@ namespace FreeCourse.Shared.CrossCuttingConcerns.Serilog.Logger
             _configuration = configuration;
 
             FileLogConfiguration logConfig = configuration.GetSection("SeriLogConfigurations:FileLogConfiguration")
-                                                            .Get<FileLogConfiguration>() ??
-                                                            throw new System.ArgumentNullException(SerilogMessages.NullOptionMessage);
+                                                        .Get<FileLogConfiguration>() ??
+                                                        throw new System.ArgumentNullException(SerilogMessages.NullOptionMessage);
 
             string logFilePath = string.Format("{0}{1}", Directory.GetCurrentDirectory() + logConfig.FolderPath, ".txt");
 

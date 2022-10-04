@@ -1,9 +1,9 @@
-﻿using System;
+﻿using FreeCourse.Shared.CrossCuttingConcerns;
 using System.Collections.Generic;
 
-namespace FreeCourse.Shared.CrossCuttingConcerns
+namespace FreeCourse.Shared.Messages
 {
-    public class LogDetail
+    public sealed class LogEvent
     {
         public string MethodName { get; set; }
         public List<LogParameter> Parameters { get; set; }

@@ -1,10 +1,11 @@
+using FluentValidation;
 using FreeCourse.Services.Order.Application.Consumers;
 using FreeCourse.Services.Order.Application.Features.Commands.CreateOrder;
+using FreeCourse.Services.Order.Application.PipelineBehaviors.ExceptionLogging;
 using FreeCourse.Services.Order.Application.PipelineBehaviors.Logging;
 using FreeCourse.Services.Order.Application.PipelineBehaviors.Performance;
+using FreeCourse.Services.Order.Application.PipelineBehaviors.Validation;
 using FreeCourse.Services.Order.Infrastructure;
-using FreeCourse.Shared.CrossCuttingConcerns.Serilog;
-using FreeCourse.Shared.CrossCuttingConcerns.Serilog.Logger;
 using FreeCourse.Shared.Messages;
 using FreeCourse.Shared.Service;
 using MassTransit;
@@ -34,13 +35,20 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(typeof(CreateOrderCommand));
 #endregion
 
+#region Pipeline Behaviors
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ExceptionLoggingBehavior<,>));
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformanceBehavior<,>));
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+#endregion
+
 #region ContextAccessor and SharedIdentity
 builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 
 builder.Services.AddHttpContextAccessor();
 #endregion
 
-#region
+#region JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -56,13 +64,6 @@ builder.Services.AddDbContext<OrderDbContext>(opt => opt.UseSqlServer(builder.Co
     configure.MigrationsAssembly("FreeCourse.Services.Order.Infrastructure");
 }));
 #endregion
-
-#region Pipelines
-builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LogPipeline<,>));
-builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformancingRequest<,>));
-#endregion
-
-builder.Services.AddScoped<LoggerServiceBase, FileLogger>();
 
 #region MassTransit
 //Default Port: 5672
@@ -89,6 +90,10 @@ builder.Services.AddMassTransit(x =>
         });
     });
 });
+#endregion
+
+#region FluentValidationAssembly
+builder.Services.AddValidatorsFromAssembly(typeof(CreateOrderCommandValidator).Assembly);
 #endregion
 
 var app = builder.Build();
